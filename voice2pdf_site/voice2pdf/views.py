@@ -11,7 +11,7 @@ def index(request):
         form = PdfForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('voice2pdf')
+            return redirect("voice2pdf")
     form = PdfForm()
 
     page = {
@@ -19,11 +19,11 @@ def index(request):
         "list": item_list,
         "title": "TODO LIST",
     }
-    return render(request, 'voice2pdf/index.html', page)
+    return render(request, "voice2pdf/index.html", page)
 
 
 def remove(request, item_id):
     item = Voice2Pdf.objects.get(id=item_id)
     item.delete()
     messages.info(request, "item removed !!!")
-    return redirect('voice2pdf')
+    return redirect("voice2pdf")
