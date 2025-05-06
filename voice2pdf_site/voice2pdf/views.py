@@ -1,5 +1,5 @@
-from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.contrib import messages  # type: ignore
+from django.shortcuts import redirect, render  # type: ignore
 
 from .forms import PdfForm
 from .models import Voice2Pdf
