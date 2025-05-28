@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  django:
+    build: .
+    volumes:
+      - .:/app
+    command: >
+      sh -c "django-admin startproject backend . &&
+             python manage.py startapp app" 
