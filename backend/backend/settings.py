@@ -78,4 +78,16 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Create media directories if they don't exist
+PDF_TMP_DIR = os.path.join(MEDIA_ROOT, 'pdf_tmp')
+os.makedirs(PDF_TMP_DIR, exist_ok=True)
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]

@@ -1,10 +1,11 @@
-version: '3.8'
-
 services:
   django:
     build: .
+    ports:
+      - "8000:8000"
     volumes:
       - .:/app
-    command: >
-      sh -c "django-admin startproject backend . &&
-             python manage.py startapp app" 
+    environment:
+      - DEBUG=1
+      - DJANGO_SETTINGS_MODULE=backend.settings
+    command: python manage.py runserver 0.0.0.0:8000 
