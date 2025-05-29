@@ -5,6 +5,7 @@ import os
 from django.conf import settings
 from rest_framework import status
 
+
 @pytest.mark.django_db
 def test_successful_pdf_upload(client):
     # Create a test PDF file
@@ -33,6 +34,7 @@ def test_successful_pdf_upload(client):
     # Cleanup
     os.remove(filepath)
 
+
 @pytest.mark.django_db
 def test_invalid_file_upload(client):
     # Create a test text file
@@ -51,6 +53,7 @@ def test_invalid_file_upload(client):
     assert response.status_code == 400
     assert 'file' in response.json()
 
+
 def test_upload_pdf(api_client):
     url = reverse('upload_file')
     with open('test.pdf', 'rb') as f:
@@ -58,9 +61,10 @@ def test_upload_pdf(api_client):
     assert response.status_code == status.HTTP_201_CREATED
     assert response.json() == {'message': 'File uploaded successfully'}
 
+
 def test_upload_invalid_file(api_client):
     url = reverse('upload_file')
     with open('test.txt', 'rb') as f:
         response = api_client.post(url, {'file': f}, format='multipart')
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert 'Only PDF files are allowed' in response.json()['file'][0] 
+    assert 'Only PDF files are allowed' in response.json()['file'][0]
