@@ -9,6 +9,36 @@ This is the frontend for the Voice2PDF project, built with Vue 3 and Vite.
 - **Health Check**: Display backend health status.
 - **Comprehensive Unit Tests**: All components are covered by tests using Vitest, including mocks for browser APIs and PDF.js.
 
+## Development Setup
+
+### Prerequisites
+- Node.js 20 or later
+- npm (comes with Node.js)
+- Docker and Docker Compose (for containerized development)
+
+### Local Development
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start the development server:
+```bash
+npm run dev
+```
+
+The application will be available at [http://localhost:5173](http://localhost:5173).
+
+### Docker Development
+
+1. From the project root, build and start all services:
+```bash
+docker-compose up --build
+```
+
+2. The frontend will be available at [http://localhost:5173](http://localhost:5173).
+
 ## Components
 
 ### `Upload.vue`
@@ -29,7 +59,7 @@ This is the frontend for the Voice2PDF project, built with Vue 3 and Vite.
 
 ## Usage
 
-1. Start the backend and frontend (see project root README for Docker instructions).
+1. Start the backend and frontend (using either local development or Docker setup).
 2. Open the frontend at [http://localhost:5173](http://localhost:5173).
 3. Use the upload form to select and upload a PDF file. The file will be sent to the backend and rendered in the browser.
 4. The health check component displays the backend status.
@@ -47,6 +77,18 @@ npm test
 - All major components (`Upload.vue`, `Pages.vue`, `HealthCheck.vue`) are covered by tests.
 - Tests include mocks for browser APIs (e.g., `URL.createObjectURL`, `canvas`) and PDF.js.
 - Error handling and edge cases are tested.
+
+## Docker Configuration
+
+The frontend is containerized using Docker with the following configuration:
+
+- Base image: Node.js 20 (slim)
+- Development server runs on port 5173
+- Uses volume mounts for hot-reloading during development
+- Configured to work with the backend service
+
+### Environment Variables
+- `VITE_API_URL`: Backend API URL (default: http://localhost:8000)
 
 ---
 

@@ -37,7 +37,7 @@ The frontend is built with React and provides the user interface.
 ```
 frontend/
 ├── src/
-│   ├── components/     # Reusable UI components
+│   ├── components/    # Reusable UI components
 │   ├── pages/         # Page components
 │   ├── api/           # API integration
 │   ├── hooks/         # Custom React hooks
@@ -60,17 +60,17 @@ The backend is built with Django and Django REST Framework.
 #### Directory Structure:
 ```
 backend/
-├── backend/          # Project settings
-│   ├── settings.py   # Django settings
-│   ├── urls.py       # URL routing
-│   └── wsgi.py       # WSGI configuration
-├── apps/            # Django applications
-│   └── upload/      # Upload handling
-│       ├── models.py    # Database models
-│       ├── views.py     # API views
-│       ├── urls.py      # URL patterns
-│       └── tests.py     # Test cases
-└── manage.py        # Django management script
+├── backend/            # Project settings
+│   ├── settings.py     # Django settings
+│   ├── urls.py         # URL routing
+│   └── wsgi.py         # WSGI configuration
+├── apps/               # Django applications
+│   └── upload/         # Upload handling
+│       ├── models.py   # Database models
+│       ├── views.py    # API views
+│       ├── urls.py     # URL patterns
+│       └── tests.py    # Test cases
+└── manage.py           # Django management script
 ```
 
 ### 3. Database (PostgreSQL)
