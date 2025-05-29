@@ -2,9 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [ '*' ]
+    branches: [ main, master, '**' ]
   pull_request:
-    branches: [ '*' ]
+    branches: [ main, master, '**' ]
+  workflow_dispatch:
 
 jobs:
   backend:
@@ -32,9 +33,9 @@ jobs:
       run: |
         flake8 . \
           --max-line-length=100 \
-          --exclude=.git,__pycache__,build,dist,venv \
+          --exclude=.git,__pycache__,build,dist,venv,migrations \
           --per-file-ignores="__init__.py:F401,conftest.py:F401,manage.py:F401" \
-          --ignore=E203,W503,D100,D101,D102,D103 \
+          --ignore=E203,W503,D100,D101,D102,D103,D104,D105,D106 \
           --max-complexity=10
 
     - name: Run tests

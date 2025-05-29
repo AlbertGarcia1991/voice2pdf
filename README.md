@@ -1,6 +1,6 @@
 # Voice2PDF
 
-A web application that allows users to upload PDF files and convert them to text using voice recognition.
+A Django + React application for converting voice to PDF.
 
 ## Project Overview
 
@@ -141,4 +141,56 @@ python manage.py test
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Development
+
+### Backend
+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Testing
+
+### Backend
+
+```bash
+cd backend
+pytest
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm test
+```
+
+## Docker
+
+```bash
+docker compose up --build
+```
+
+## API Documentation
+
+### Template Endpoints
+
+- `POST /api/templates/` - Create a new template
+- `GET /api/templates/<id>/` - Retrieve a template by ID
+
+For more details, see the [Development Guide](docs/development.md).
