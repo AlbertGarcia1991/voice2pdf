@@ -1,9 +1,15 @@
 <template>
   <div class="health-check">
     <h2>Backend Health Status</h2>
-    <p v-if="loading">Loading...</p>
-    <p v-else-if="error">Error: {{ error }}</p>
-    <p v-else>Status: {{ status }}</p>
+    <p v-if="loading">
+      Loading...
+    </p>
+    <p v-else-if="error">
+      Error: {{ error }}
+    </p>
+    <p v-else>
+      Status: {{ status }}
+    </p>
   </div>
 </template>
 
@@ -49,4 +55,4 @@ export default {
   background-color: #f5f5f5;
   margin: 20px;
 }
-</style> 
+</style>

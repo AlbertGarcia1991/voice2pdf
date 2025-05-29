@@ -16,14 +16,6 @@ const mockContext = {
   restore: vi.fn(),
 }
 
-// Mock canvas element
-const mockCanvas = {
-  getContext: vi.fn(() => mockContext),
-  width: 800,
-  height: 600,
-  style: {},
-}
-
 // Mock HTMLCanvasElement
 HTMLCanvasElement.prototype.getContext = vi.fn(() => mockContext)
 
@@ -44,7 +36,7 @@ describe('Pages.vue', () => {
     vi.clearAllMocks()
     mockPdf = {
       numPages: 2,
-      getPage: vi.fn().mockImplementation((pageNumber) => ({
+      getPage: vi.fn().mockImplementation(() => ({
         getViewport: () => ({ width: 800, height: 600 }),
         render: vi.fn().mockResolvedValue({})
       }))
@@ -102,4 +94,4 @@ describe('Pages.vue', () => {
 
     expect(pdfjsLib.getDocument).toHaveBeenCalledTimes(2)
   })
-}) 
+})

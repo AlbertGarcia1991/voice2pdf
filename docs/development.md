@@ -317,4 +317,122 @@ See the [Deployment Guide](./deployment.md) for detailed instructions.
 
 3. Open an issue on GitHub
 
-4. Contact the maintainers 
+4. Contact the maintainers
+
+## Makefile Commands
+
+The project includes a Makefile with various commands to help with development tasks. Here's a comprehensive guide to all available commands.
+
+### Getting Started
+
+To see all available commands and their descriptions:
+```bash
+make help
+```
+
+### Docker Commands
+
+| Command | Description |
+|---------|-------------|
+| `make up` | Start all services in the foreground |
+| `make up-d` | Start all services in detached mode (background) |
+| `make down` | Stop all running services |
+| `make build` | Build all Docker services |
+| `make rebuild` | Rebuild all Docker services without using cache |
+
+### Frontend Commands
+
+| Command | Description |
+|---------|-------------|
+| `make frontend-install` | Install frontend dependencies |
+| `make frontend-dev` | Start frontend development server |
+| `make frontend-test` | Run frontend tests |
+| `make frontend-lint` | Run frontend linter |
+
+### Backend Commands
+
+| Command | Description |
+|---------|-------------|
+| `make backend-install` | Install backend dependencies |
+| `make backend-migrate` | Run database migrations |
+| `make backend-test` | Run backend tests |
+| `make backend-lint` | Run backend linter |
+
+### Development Workflow
+
+| Command | Description |
+|---------|-------------|
+| `make setup` | Install all dependencies (frontend and backend) |
+| `make test` | Run all tests (frontend and backend) |
+| `make lint` | Run all linters (frontend and backend) |
+| `make dev` | Start the complete development environment |
+| `make clean` | Clean up temporary files and containers |
+
+### Development Environment
+
+To start the development environment:
+```bash
+make dev
+```
+
+This will:
+1. Start all services in detached mode
+2. Make the frontend available at http://localhost:5173
+3. Make the backend available at http://localhost:8000
+
+### Running Modes
+
+The project supports two main running modes:
+
+#### Detached Mode (`make dev`)
+- Starts services in the background
+- Doesn't block your terminal
+- Perfect for development as you can run other commands
+- Services keep running until explicitly stopped
+- Use this mode for regular development work
+- To view logs: `docker compose logs -f`
+
+#### Foreground Mode (`make up`)
+- Starts services in the foreground
+- Shows real-time logs in your terminal
+- Blocks the terminal (can't run other commands)
+- Stops when you press Ctrl+C
+- Useful for debugging and monitoring
+- Perfect for troubleshooting issues
+
+Choose the mode based on your needs:
+- Use `make dev` for regular development
+- Use `make up` when you need to debug or monitor services closely
+
+### Cleanup
+
+To clean up the development environment:
+```bash
+make clean
+```
+
+This command will:
+1. Stop all running services
+2. Remove all containers and volumes
+3. Clean up temporary files including:
+   - Python cache files
+   - Node modules
+   - Test coverage files
+   - Build artifacts
+   - Cache directories
+
+### Best Practices
+
+1. Always run `make setup` when first cloning the repository
+2. Use `make dev` to start the development environment
+3. Run `make test` before committing changes
+4. Use `make lint` to ensure code quality
+5. Run `make clean` when switching branches or when you encounter issues
+
+### Troubleshooting
+
+If you encounter issues:
+1. Run `make clean` to ensure a clean state
+2. Run `make rebuild` to rebuild all services
+3. Check the logs using `docker compose logs`
+4. Ensure all dependencies are installed with `make setup`

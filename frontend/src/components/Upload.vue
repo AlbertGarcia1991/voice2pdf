@@ -3,14 +3,25 @@
     <input
       type="file"
       accept="application/pdf"
-      @change="handleFileSelect"
       class="file-input"
-    />
-    <div v-if="error" class="error">{{ error }}</div>
-    <div v-if="uploadId" class="success">
+      @change="handleFileSelect"
+    >
+    <div
+      v-if="error"
+      class="error"
+    >
+      {{ error }}
+    </div>
+    <div
+      v-if="uploadId"
+      class="success"
+    >
       File uploaded successfully! Upload ID: {{ uploadId }}
     </div>
-    <Pages v-if="pdfUrl" :pdf-url="pdfUrl" />
+    <Pages
+      v-if="pdfUrl"
+      :pdf-url="pdfUrl"
+    />
   </div>
 </template>
 
@@ -48,7 +59,7 @@ const handleFileSelect = async (event: Event) => {
     const data = await response.json()
     uploadId.value = data.upload_id
     error.value = null
-    
+
     // Create a blob URL for the PDF
     pdfUrl.value = URL.createObjectURL(file)
   } catch (err) {
@@ -83,4 +94,4 @@ const handleFileSelect = async (event: Event) => {
   color: #28a745;
   margin-bottom: 10px;
 }
-</style> 
+</style>

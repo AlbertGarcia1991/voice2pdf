@@ -1,7 +1,14 @@
 <template>
   <div class="pages-container">
-    <div v-for="(canvas, index) in canvases" :key="index" class="page-wrapper">
-      <canvas ref="canvasRefs" :id="`page-${index + 1}`"></canvas>
+    <div
+      v-for="(canvas, index) in canvases"
+      :key="index"
+      class="page-wrapper"
+    >
+      <canvas
+        :id="`page-${index + 1}`"
+        ref="canvasRefs"
+      />
     </div>
   </div>
 </template>
@@ -92,4 +99,4 @@ canvas {
   max-width: 100%;
   height: auto;
 }
-</style> 
+</style>
