@@ -198,6 +198,69 @@ We use ESLint and Prettier:
 
 5. Write tests in `__tests__` directory
 
+### Data Models
+
+### Template and Field (templates app)
+
+The `templates` app provides a flexible way to store PDF form templates and their fields. It includes:
+- `Template`: Represents a PDF template, linked to an upload.
+- `Field`: Represents a form field on a template, with type, label, position, validation, and value.
+
+#### Example Model Definition
+```python
+class Template(models.Model):
+    upload_id = models.CharField(max_length=64, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Field(models.Model):
+    template = models.ForeignKey('Template', related_name='fields', on_delete=models.CASCADE)
+    field_id = models.CharField(max_length=32)
+    type = models.CharField(max_length=32)
+    label = models.CharField(max_length=128)
+    placeholder = models.CharField(max_length=256, blank=True)
+    page_number = models.IntegerField()
+    x = models.FloatField()
+    y = models.FloatField()
+    width = models.FloatField()
+    height = models.FloatField()
+    validation = models.JSONField(default=dict)
+    value = models.TextField(blank=True)
+```
+
+## Serializers
+
+### Template and Field Serializers
+
+The `TemplateSerializer` and `FieldSerializer` in `templates/serializers.py` support full (de)serialization of templates and their nested fields, including creation and update of nested objects.
+
+#### Example Usage
+```python
+serializer = TemplateSerializer(template_instance)
+data = serializer.data  # Nested fields included
+
+# Deserialization
+serializer = TemplateSerializer(data=payload)
+serializer.is_valid()
+serializer.save()
+```
+
+## Testing
+
+- The `templates` app is fully test-driven: see `templates/tests/test_models_serializers.py` for model and serializer tests.
+- Tests cover creation, serialization, and deserialization of templates and fields.
+
+## Adding New Features
+
+### Example: Adding a Template Data Model (TDD)
+
+1. **Write tests first** for the new model and serializer in `templates/tests/`.
+2. **Implement models** in `templates/models.py`.
+3. **Implement serializers** in `templates/serializers.py`.
+4. **Run tests** with `pytest` and ensure all pass before proceeding.
+5. Only then, add endpoints or business logic.
+
+This approach ensures robust, well-tested code for all new features.
+
 ## Debugging
 
 ### Backend
@@ -436,3 +499,107 @@ If you encounter issues:
 2. Run `make rebuild` to rebuild all services
 3. Check the logs using `docker compose logs`
 4. Ensure all dependencies are installed with `make setup`
+
+## API Endpoints
+
+### Template Endpoints (templates app)
+
+- **Create Template**
+  - `POST /api/templates/`
+  - Request body: JSON with `upload_id` and a list of `fields` (see below)
+  - Response: `{ "template_id": <id> }` (201 Created)
+
+- **Retrieve Template**
+  - `GET /api/templates/<id>/`
+  - Response: Full template object with nested fields (200 OK)
+
+#### Example: Create Template
+```json
+POST /api/templates/
+{
+  "upload_id": "test-upload-789",
+  "fields": [
+    {
+      "field_id": "field1",
+      "type": "text",
+      "label": "Name",
+      "placeholder": "Enter your name",
+      "page_number": 1,
+      "x": 100.0,
+      "y": 200.0,
+      "width": 300.0,
+      "height": 50.0,
+      "validation": {"required": true},
+      "value": "John Doe"
+    },
+    {
+      "field_id": "field2",
+      "type": "number",
+      "label": "Age",
+      "placeholder": "Enter your age",
+      "page_number": 1,
+      "x": 100.0,
+      "y": 300.0,
+      "width": 150.0,
+      "height": 50.0,
+      "validation": {"min": 0, "max": 120},
+      "value": "25"
+    }
+  ]
+}
+```
+Response:
+```json
+{
+  "template_id": 1
+}
+```
+
+#### Example: Retrieve Template
+```http
+GET /api/templates/1/
+```
+Response:
+```json
+{
+  "id": 1,
+  "upload_id": "test-upload-789",
+  "created_at": "2024-06-01T12:34:56.789Z",
+  "fields": [
+    {
+      "id": 1,
+      "template": 1,
+      "field_id": "field1",
+      "type": "text",
+      "label": "Name",
+      "placeholder": "Enter your name",
+      "page_number": 1,
+      "x": 100.0,
+      "y": 200.0,
+      "width": 300.0,
+      "height": 50.0,
+      "validation": {"required": true},
+      "value": "John Doe"
+    },
+    {
+      "id": 2,
+      "template": 1,
+      "field_id": "field2",
+      "type": "number",
+      "label": "Age",
+      "placeholder": "Enter your age",
+      "page_number": 1,
+      "x": 100.0,
+      "y": 300.0,
+      "width": 150.0,
+      "height": 50.0,
+      "validation": {"min": 0, "max": 120},
+      "value": "25"
+    }
+  ]
+}
+```
+
+### TDD Workflow Note
+
+- The template endpoints were developed using TDD: endpoint tests were written first, then the views and URLs were implemented, and all tests were run to confirm correctness.

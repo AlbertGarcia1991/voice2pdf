@@ -2,7 +2,7 @@
 max-line-length = 100
 per-file-ignores =
     voice2pdf_site/voice2pdf/tests.py:F401
-ignore = D100, D101, D102, D103
+ignore = D100, D101, D102, D103, D104, D105, D106
 
 exclude =
     migrations
