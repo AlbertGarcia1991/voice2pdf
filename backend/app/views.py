@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
@@ -5,11 +6,20 @@ from rest_framework.views import APIView
 from django.conf import settings
 import uuid
 import os
-from .serializers import PDFUploadSerializer
+from .serializers import PDFUploadSerializer, UploadSerializer
+from rest_framework import status
 
 @api_view(['GET'])
 def health_check(request):
-    return Response({"status": "ok"})
+    return Response({'status': 'healthy'})
+
+@api_view(['POST'])
+def upload_file(request):
+    serializer = UploadSerializer(data=request.data)
+    if serializer.is_valid():
+        # Process the file here
+        return Response({'message': 'File uploaded successfully'}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PDFUploadView(APIView):
     parser_classes = (MultiPartParser,)

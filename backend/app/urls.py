@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('health/', views.health_check, name='health_check'),
-    path('upload/', views.PDFUploadView.as_view(), name='pdf_upload'),
+    path('upload/', views.upload_file, name='upload_file'),
 ] 

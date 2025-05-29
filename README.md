@@ -14,6 +14,7 @@ Voice2PDF consists of two main components:
 - Python 3.8 or later
 - Docker and Docker Compose (for containerized development)
 - Git
+- pre-commit (for development)
 
 ## Quick Start with Docker
 
@@ -33,6 +34,20 @@ docker-compose up --build
 - Backend API: [http://localhost:8000](http://localhost:8000)
 
 ## Development Setup
+
+### Pre-commit Hooks Setup
+
+1. Install pre-commit:
+```bash
+pip install pre-commit
+```
+
+2. Install the pre-commit hooks:
+```bash
+pre-commit install
+```
+
+This will automatically run flake8 and other checks before each commit, preventing code style issues from being pushed to the repository.
 
 ### Frontend Development
 
@@ -119,9 +134,10 @@ python manage.py test
 
 1. Fork the repository
 2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+3. Install pre-commit hooks (see Development Setup)
+4. Commit your changes
+5. Push to the branch
+6. Create a Pull Request
 
 ## License
 
