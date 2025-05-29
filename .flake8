@@ -5,6 +5,14 @@ per-file-ignores =
 ignore = D100, D101, D102, D103, D104, D105, D106
 
 exclude =
+    .git
+    .github
+    .vscode
+    .flake8
+    .pre-commit-config.yaml
+    .pre-commit-hooks.yaml
+    .pre-commit-hooks.yaml
+    build
     migrations
     __pycache__
     manage.py
